@@ -4,7 +4,7 @@ void MusicScreen::init() {
   index_ = 0;
   offset_ = 0;
   text_.reset(new Text("text"));
-  mgen_.reset(new MusicGenerator(44100));
+  mgen_.reset(new MusicGenerator(56320));
 }
 
 bool MusicScreen::update(Input& input, unsigned int elapsed) {
