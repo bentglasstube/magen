@@ -11,10 +11,20 @@ bool MusicScreen::update(Input& input, unsigned int elapsed) {
   offset_ += elapsed * mgen_->frequency() / 1000;
 
   if (input.key_pressed(SDL_SCANCODE_UP))    mgen_->increment(index_);
+  if (input.key_pressed(SDL_SCANCODE_W))     mgen_->increment(index_);
+  if (input.key_pressed(SDL_SCANCODE_K))     mgen_->increment(index_);
+
   if (input.key_pressed(SDL_SCANCODE_DOWN))  mgen_->decrement(index_);
+  if (input.key_pressed(SDL_SCANCODE_S))     mgen_->decrement(index_);
+  if (input.key_pressed(SDL_SCANCODE_J))     mgen_->decrement(index_);
 
   if (input.key_pressed(SDL_SCANCODE_LEFT))  --index_;
+  if (input.key_pressed(SDL_SCANCODE_A))     --index_;
+  if (input.key_pressed(SDL_SCANCODE_H))     --index_;
+
   if (input.key_pressed(SDL_SCANCODE_RIGHT)) ++index_;
+  if (input.key_pressed(SDL_SCANCODE_D))     ++index_;
+  if (input.key_pressed(SDL_SCANCODE_L))     ++index_;
 
   if (input.key_pressed(SDL_SCANCODE_SPACE)) mgen_->reset();
 
