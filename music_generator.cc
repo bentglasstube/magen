@@ -8,7 +8,7 @@ MusicGenerator::MusicGenerator(int frequency)
   SDL_AudioSpec spec;
 
   spec.freq = freq_;
-  spec.format = AUDIO_U16;
+  spec.format = AUDIO_U8;
   spec.channels = 1;
   spec.samples = 128;
   spec.callback = __audio_callback;
@@ -40,11 +40,11 @@ int MusicGenerator::frequency() const {
   return freq_;
 }
 
-int MusicGenerator::get(int n) const {
+Uint8 MusicGenerator::get(int n) const {
   return x_[n];
 }
 
-void MusicGenerator::set(int n, int v) {
+void MusicGenerator::set(int n, Uint8 v) {
   x_[n] = v;
 }
 

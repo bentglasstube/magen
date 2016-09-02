@@ -51,7 +51,7 @@ void MusicScreen::draw(Graphics& graphics) const {
 
   char buffer[10];
   for (int i = 0; i < 6; ++i) {
-    snprintf(buffer, 10, "[%02d]", mgen_->get(i));
+    snprintf(buffer, 10, "[%02X]", mgen_->get(i));
     text_->draw(graphics, buffer, 204 + 40 * i, 272);
   }
 

@@ -13,9 +13,9 @@ class MusicGenerator {
 
     int frequency() const;
 
-    int get(int n) const;
+    Uint8 get(int n) const;
 
-    void set(int n, int v);
+    void set(int n, Uint8 v);
     void increment(int n);
     void decrement(int n);
     void reset();
