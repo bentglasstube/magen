@@ -4,7 +4,7 @@ void MusicScreen::init() {
   index_ = 0;
   offset_ = 0;
   text_.reset(new Text("text"));
-  mgen_.reset(new MusicGenerator(22000));
+  mgen_.reset(new MusicGenerator(44100));
 }
 
 bool MusicScreen::update(Input& input, unsigned int elapsed) {
@@ -35,7 +35,7 @@ bool MusicScreen::update(Input& input, unsigned int elapsed) {
 void MusicScreen::draw(Graphics& graphics) const {
   const int color = mgen_->muted() ? 0xff0000ff : 0xffffffff;
   for (int x = 0; x < 640; ++x) {
-    const int v = mgen_->sample((x - 640) * 4 + offset_ - offset_ % 640);
+    const int v = mgen_->sample((x - 640) * 4 + offset_ - offset_ % 512);
     graphics.draw_pixel(x, 256 - v / 4, color);
   }
 
