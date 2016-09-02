@@ -44,9 +44,12 @@ bool MusicScreen::update(Input& input, unsigned int elapsed) {
 
 void MusicScreen::draw(Graphics& graphics) const {
   const int color = mgen_->muted() ? 0xff0000ff : 0xffffffff;
-  for (int x = 0; x < 640; ++x) {
-    const int v = mgen_->sample((x - 640) * 4 + offset_ - offset_ % 512);
-    graphics.draw_pixel(x, 256 - v / 4, color);
+  int v1 = mgen_->sample((-640) * 4 + offset_ - offset_ % 512);
+  for (int x = 1; x < 128; ++x) {
+    const int v2 = mgen_->sample(x * 4 + offset_ - offset_ % 512);
+    const int px = 4 * x + 64;
+    graphics.draw_line(px - 4, 256 - v1 / 4, px, 256 - v2 / 4, color);
+    v1 = v2;
   }
 
   char buffer[10];
