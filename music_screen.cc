@@ -48,18 +48,22 @@ void MusicScreen::draw(Graphics& graphics) const {
   for (int x = 1; x < 128; ++x) {
     const int v2 = mgen_->sample(x * 4 + offset_ - offset_ % 512);
     const int px = 4 * x + 64;
-    graphics.draw_line(px - 4, 256 - v1 / 4, px, 256 - v2 / 4, color);
+    graphics.draw_line(px - 4, 128 - v1 / 4, px, 128 - v2 / 4, color);
     v1 = v2;
   }
 
   char buffer[10];
   for (int i = 0; i < 6; ++i) {
     snprintf(buffer, 10, "[%02X]", mgen_->get(i));
-    text_->draw(graphics, buffer, 204 + 40 * i, 272);
+    text_->draw(graphics, buffer, 204 + 40 * i, 144);
   }
 
-  text_->draw(graphics, "^^", 212 + 40 * index_, 288);
-  text_->draw(graphics, "Esc to quit", 320, 340, Text::Alignment::CENTER);
+  text_->draw(graphics, "^^", 212 + 40 * index_, 160);
+
+  text_->draw(graphics, "    r - random", 264, 192);
+  text_->draw(graphics, "    m - mute",   264, 208);
+  text_->draw(graphics, "space - reset",  264, 224);
+  text_->draw(graphics, "  esc - quit",   264, 240);
 }
 
 Screen* MusicScreen::next_screen() {
