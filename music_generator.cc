@@ -14,13 +14,13 @@ MusicGenerator::MusicGenerator(int frequency)
   spec.callback = __audio_callback;
   spec.userdata = this;
 
-  SDL_OpenAudio(&spec, NULL);
+  device_ = SDL_OpenAudioDevice(NULL, 0, &spec, NULL, 0);
 
-  SDL_PauseAudio(0);
+  SDL_PauseAudioDevice(device_, 0);
 }
 
 MusicGenerator::~MusicGenerator() {
-  SDL_CloseAudio();
+  SDL_CloseAudioDevice(device_);
 }
 
 void MusicGenerator::audio_callback(Uint8 *stream, int length) {

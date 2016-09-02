@@ -27,6 +27,7 @@ class MusicGenerator {
   private:
     int freq_, pos_, x_[6];
     bool muted_;
+    SDL_AudioDeviceID device_;
 };
 
 void __audio_callback(void *c, Uint8 *stream, int length);
