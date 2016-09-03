@@ -24,8 +24,11 @@ class MusicGenerator {
     void mute();
     void unmute();
 
+    void set_gen(int n);
+    int get_gen() const;
+
   private:
-    int freq_, pos_, x_[6];
+    int freq_, pos_, x_[6], generator_;
     bool muted_;
     SDL_AudioDeviceID device_;
 };

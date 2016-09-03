@@ -1,7 +1,7 @@
 #include "music_generator.h"
 
 MusicGenerator::MusicGenerator(int frequency)
-  : freq_(frequency), pos_(0), muted_(false)
+  : freq_(frequency), pos_(0), generator_(1), muted_(false)
 {
   for (int i = 0; i < 6; ++i) x_[i] = 0;
 
@@ -32,8 +32,27 @@ void MusicGenerator::audio_callback(Uint8 *stream, int length) {
 }
 
 Uint8 MusicGenerator::sample(int t) const {
-  return (t >> x_[0] | t | t >> x_[1]) * x_[2] +
-    x_[3] * (t & t >> x_[4] | t >> x_[5]);
+  const int a = x_[0];
+  const int b = x_[1];
+  const int c = x_[2];
+  const int d = x_[3];
+  const int e = x_[4];
+  const int f = x_[5];
+
+  switch (generator_) {
+
+    case 1:
+
+      return (t >> a | t | t >> b) * c + d * (t & t >> e | t >> f);
+
+    case 2:
+
+      return (t * a & t >> b) | (t * c & t >> d) | (t * e & t >> f);
+
+    default:
+
+      return 0;
+  }
 }
 
 int MusicGenerator::frequency() const {
@@ -70,6 +89,14 @@ void MusicGenerator::mute() {
 
 void MusicGenerator::unmute() {
   muted_ = false;
+}
+
+void MusicGenerator::set_gen(int n) {
+  generator_ = n;
+}
+
+int MusicGenerator::get_gen() const {
+  return generator_;
 }
 
 void __audio_callback(void *userdata, Uint8 *stream, int length) {

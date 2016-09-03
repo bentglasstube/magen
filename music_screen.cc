@@ -36,6 +36,10 @@ bool MusicScreen::update(Input& input, unsigned int elapsed) {
     for (int i = 0; i < 6; ++i) mgen_->set(i, rand() % 16);
   }
 
+  if (input.key_pressed(SDL_SCANCODE_TAB)) {
+    mgen_->set_gen(mgen_->get_gen() % 2 + 1);
+  }
+
   if (index_ < 0) index_ = 0;
   if (index_ > 5) index_ = 5;
 
@@ -53,6 +57,9 @@ void MusicScreen::draw(Graphics& graphics) const {
   }
 
   char buffer[10];
+  snprintf(buffer, 10, "G:%1d", mgen_->get_gen());
+  text_->draw(graphics, buffer, 160, 144);
+
   for (int i = 0; i < 6; ++i) {
     snprintf(buffer, 10, "[%02X]", mgen_->get(i));
     text_->draw(graphics, buffer, 204 + 40 * i, 144);
