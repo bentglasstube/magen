@@ -50,7 +50,7 @@ void MusicScreen::draw(Graphics& graphics) const {
   const int color = mgen_->muted() ? 0xff0000ff : 0xffffffff;
   int v1 = mgen_->sample((-640) * 4 + offset_ - offset_ % 512);
   for (int x = 1; x < 128; ++x) {
-    const int v2 = mgen_->sample(x * 4 + offset_ - offset_ % 512);
+    const int v2 = mgen_->sample((x - 512) * 4 + offset_ - offset_ % 512);
     const int px = 4 * x + 64;
     graphics.draw_line(px - 4, 128 - v1 / 4, px, 128 - v2 / 4, color);
     v1 = v2;
