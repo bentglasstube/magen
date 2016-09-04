@@ -43,7 +43,7 @@ Uint8 MusicGenerator::sample(int t) const {
 
     case 1:
 
-      return (t >> a | t | t >> b) * c + d * (t & t >> e | t >> f);
+      return (t >> a | t | t >> b) * c + d * ((t & t >> e) | t >> f);
 
     case 2:
 
