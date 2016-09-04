@@ -27,8 +27,17 @@ class MusicGenerator {
     void set_gen(int n);
     int get_gen() const;
 
+    void set_waveform(int n);
+    int get_waveform() const;
+
   private:
+    int sqr(int t) const;
+    int saw(int t) const;
+    int tri(int t) const;
+    int sin(int t) const;
+
     int freq_, pos_, x_[6], generator_;
+    int waveform_;
     bool muted_;
     SDL_AudioDeviceID device_;
 };
