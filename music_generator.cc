@@ -1,7 +1,8 @@
+#include <cmath>
 #include "music_generator.h"
 
 MusicGenerator::MusicGenerator(int frequency)
-  : freq_(frequency), pos_(0), generator_(1), muted_(false)
+  : freq_(frequency), pos_(0), generator_(1), waveform_(0), muted_(false)
 {
   for (int i = 0; i < 6; ++i) x_[i] = 0;
 
@@ -31,6 +32,41 @@ void MusicGenerator::audio_callback(Uint8 *stream, int length) {
   pos_ += length;
 }
 
+int MusicGenerator::saw(int t) const {
+    return t;
+}
+
+int MusicGenerator::sqr(int t) const {
+    int phase = t & 0xff;
+    t &= ~0xff;
+    if (phase < 128) {
+        phase = 0;
+    } else {
+        phase = 255;
+    }
+    return t | phase;
+}
+
+int MusicGenerator::tri(int t) const {
+    int phase = t & 0xff;
+    t &= ~0xff;
+    if (phase < 128) {
+        phase *= 2;
+    } else {
+        phase = 255 - 2*(phase - 128);
+
+    }
+    return t | phase;
+}
+
+int MusicGenerator::sin(int t) const {
+    int phase = t & 0xff;
+    t &= ~0xff;
+
+    phase = 128 + 127 * std::sin(2.0 * M_PI * double(phase) / 255.0);
+    return t | phase;
+}
+
 Uint8 MusicGenerator::sample(int t) const {
   const int a = x_[0];
   const int b = x_[1];
@@ -38,6 +74,15 @@ Uint8 MusicGenerator::sample(int t) const {
   const int d = x_[3];
   const int e = x_[4];
   const int f = x_[5];
+
+  switch (waveform_) {
+    case 0: t = saw(t); break;
+    case 1: t = sqr(t); break;
+    case 2: t = tri(t); break;
+    case 3: t = sin(t); break;
+    default:
+        ; // Do nothing, same as sawtooth wave.
+  }
 
   switch (generator_) {
 
@@ -97,6 +142,14 @@ void MusicGenerator::set_gen(int n) {
 
 int MusicGenerator::get_gen() const {
   return generator_;
+}
+
+void MusicGenerator::set_waveform(int n) {
+  waveform_ = n;
+}
+
+int MusicGenerator::get_waveform() const {
+  return waveform_;
 }
 
 void __audio_callback(void *userdata, Uint8 *stream, int length) {

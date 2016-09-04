@@ -40,6 +40,10 @@ bool MusicScreen::update(Input& input, unsigned int elapsed) {
     mgen_->set_gen(mgen_->get_gen() % 2 + 1);
   }
 
+  if (input.key_pressed(SDL_SCANCODE_Q)) {
+    mgen_->set_waveform((mgen_->get_waveform() + 1) % 4);
+  }
+
   if (index_ < 0) index_ = 0;
   if (index_ > 5) index_ = 5;
 
@@ -60,6 +64,9 @@ void MusicScreen::draw(Graphics& graphics) const {
   snprintf(buffer, 10, "G:%1d", mgen_->get_gen());
   text_->draw(graphics, buffer, 160, 144);
 
+  snprintf(buffer, 10, "W:%1d", mgen_->get_waveform());
+  text_->draw(graphics, buffer, 120, 144);
+
   for (int i = 0; i < 6; ++i) {
     snprintf(buffer, 10, "[%02X]", mgen_->get(i));
     text_->draw(graphics, buffer, 204 + 40 * i, 144);
@@ -69,8 +76,10 @@ void MusicScreen::draw(Graphics& graphics) const {
 
   text_->draw(graphics, "    r - random", 264, 192);
   text_->draw(graphics, "    m - mute",   264, 208);
-  text_->draw(graphics, "space - reset",  264, 224);
-  text_->draw(graphics, "  esc - quit",   264, 240);
+  text_->draw(graphics, "    q - waveform", 264, 224);
+  text_->draw(graphics, "  tab - generator", 264, 240);
+  text_->draw(graphics, "space - reset",  264, 256);
+  text_->draw(graphics, "  esc - quit",   264, 272);
 }
 
 Screen* MusicScreen::next_screen() {
