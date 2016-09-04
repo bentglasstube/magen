@@ -1,6 +1,5 @@
 SOURCES=$(wildcard *.cc) $(wildcard framework/*.cc)
 OBJECTS=$(SOURCES:.cc=.o)
-DEPS=$(SOURCES:.cc=.d)
 BIN=magen
 
 CXXFLAGS=-O2 --std=c++11 -Wall -Wextra -Werror -pedantic `sdl2-config --cflags`
@@ -16,8 +15,6 @@ run: $(BIN)
 	./$(BIN)
 
 clean:
-	$(RM) $(OBJECTS) $(DEPS) $(BIN)
+	$(RM) $(OBJECTS) $(BIN)
 
 .PHONY: all clean run
-
--include $(DEPS)
