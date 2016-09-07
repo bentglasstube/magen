@@ -1,4 +1,1 @@
 bazel-*
-framework/*.o
-*.o
-magen
