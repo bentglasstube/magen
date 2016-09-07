@@ -1,17 +1,16 @@
 #pragma once
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 class MusicGenerator {
   public:
 
-    MusicGenerator (int frequency);
-    ~MusicGenerator ();
+    MusicGenerator();
+    ~MusicGenerator();
 
     Uint8 sample(int t) const;
     void audio_callback(Uint8 *stream, int length);
-
-    int frequency() const;
 
     Uint8 get(int n) const;
 
@@ -36,10 +35,8 @@ class MusicGenerator {
     int tri(int t) const;
     int sin(int t) const;
 
-    int freq_, pos_, x_[6], generator_;
+    int pos_, x_[6], generator_;
     int waveform_;
     bool muted_;
     SDL_AudioDeviceID device_;
 };
-
-void __audio_callback(void *c, Uint8 *stream, int length);

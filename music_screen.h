@@ -4,16 +4,14 @@
 
 #include "music_generator.h"
 
-#include "framework/graphics.h"
-#include "framework/input.h"
-#include "framework/screen.h"
-#include "framework/text.h"
+#include "screen.h"
+#include "text.h"
 
 class MusicScreen : public Screen {
   public:
 
     void init();
-    bool update(Input& input, unsigned int elapsed);
+    bool update(Input& input, Audio& audio, unsigned int elapsed);
     void draw(Graphics& graphics) const;
 
     Screen* next_screen();

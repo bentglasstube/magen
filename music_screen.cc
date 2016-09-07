@@ -4,11 +4,12 @@ void MusicScreen::init() {
   index_ = 0;
   offset_ = 0;
   text_.reset(new Text("text"));
-  mgen_.reset(new MusicGenerator(28160));
+  mgen_.reset(new MusicGenerator());
 }
 
-bool MusicScreen::update(Input& input, unsigned int elapsed) {
-  offset_ += elapsed * mgen_->frequency() / 1000;
+bool MusicScreen::update(Input& input, Audio&, unsigned int elapsed) {
+  // TODO adjust for 28160Hz
+  offset_ += elapsed * 22.050f;
 
   if (input.key_pressed(SDL_SCANCODE_UP))    mgen_->increment(index_);
   if (input.key_pressed(SDL_SCANCODE_W))     mgen_->increment(index_);

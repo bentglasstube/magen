@@ -2,7 +2,7 @@
 
 #include "music_screen.h"
 
-#include "framework/game.h"
+#include "game.h"
 
 int main(int, char**) {
   Game game(640, 360);

@@ -1,27 +1,20 @@
 #include <cmath>
 #include "music_generator.h"
 
-MusicGenerator::MusicGenerator(int frequency)
-  : freq_(frequency), pos_(0), generator_(1), waveform_(0), muted_(false)
+void __audio_callback(void *userdata, Uint8 *stream, int length) {
+  MusicGenerator *gen = (MusicGenerator *)userdata;
+  gen->audio_callback(stream, length);
+}
+
+MusicGenerator::MusicGenerator()
+  : pos_(0), generator_(1), waveform_(0), muted_(false)
 {
   for (int i = 0; i < 6; ++i) x_[i] = 0;
-
-  SDL_AudioSpec spec;
-
-  spec.freq = freq_;
-  spec.format = AUDIO_U8;
-  spec.channels = 1;
-  spec.samples = 128;
-  spec.callback = __audio_callback;
-  spec.userdata = this;
-
-  device_ = SDL_OpenAudioDevice(NULL, 0, &spec, NULL, 0);
-
-  SDL_PauseAudioDevice(device_, 0);
+  Mix_HookMusic(__audio_callback, this);
 }
 
 MusicGenerator::~MusicGenerator() {
-  SDL_CloseAudioDevice(device_);
+  Mix_HookMusic(NULL, NULL);
 }
 
 void MusicGenerator::audio_callback(Uint8 *stream, int length) {
@@ -100,10 +93,6 @@ Uint8 MusicGenerator::sample(int t) const {
   }
 }
 
-int MusicGenerator::frequency() const {
-  return freq_;
-}
-
 Uint8 MusicGenerator::get(int n) const {
   return x_[n];
 }
@@ -150,9 +139,4 @@ void MusicGenerator::set_waveform(int n) {
 
 int MusicGenerator::get_waveform() const {
   return waveform_;
-}
-
-void __audio_callback(void *userdata, Uint8 *stream, int length) {
-  MusicGenerator *gen = (MusicGenerator *)userdata;
-  gen->audio_callback(stream, length);
 }

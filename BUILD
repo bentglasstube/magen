@@ -5,11 +5,12 @@ cc_binary(
     data = ["//content"],
     linkopts = [
         "-lSDL2",
+        "-lSDL2_mixer",
     ],
     srcs = ["main.cc"],
     deps = [
         ":music_screen",
-        "//framework:game",
+        "@libgam//:game",
     ],
 )
 
@@ -25,7 +26,7 @@ cc_library(
     hdrs = ["music_screen.h"],
     deps = [
         ":music_generator",
-        "//framework:screen",
-        "//framework:text",
+        "@libgam//:screen",
+        "@libgam//:text",
     ],
 )
