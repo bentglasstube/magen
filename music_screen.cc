@@ -7,7 +7,7 @@ void MusicScreen::init() {
   mgen_.reset(new MusicGenerator());
 }
 
-bool MusicScreen::update(Input& input, Audio&, unsigned int elapsed) {
+bool MusicScreen::update(const Input& input, Audio&, unsigned int elapsed) {
   offset_ += elapsed * 28.160f;
 
   if (input.key_pressed(SDL_SCANCODE_UP))    mgen_->increment(index_);
