@@ -8,8 +8,7 @@ void MusicScreen::init() {
 }
 
 bool MusicScreen::update(Input& input, Audio&, unsigned int elapsed) {
-  // TODO adjust for 28160Hz
-  offset_ += elapsed * 22.050f;
+  offset_ += elapsed * 28.160f;
 
   if (input.key_pressed(SDL_SCANCODE_UP))    mgen_->increment(index_);
   if (input.key_pressed(SDL_SCANCODE_W))     mgen_->increment(index_);
